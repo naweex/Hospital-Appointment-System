@@ -4,3 +4,7 @@ var session = require('express-session');
 const MongoStore = require("connect-mongo");
 const port = 5000;
 const app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
