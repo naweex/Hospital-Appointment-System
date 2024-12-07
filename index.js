@@ -8,3 +8,25 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+//session configuration
+app.use(session({
+    secret: 'gfgsecret',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        client: db.getClient(),
+        dbName: 'testdb',
+        collectionName: "sessions",
+        stringify: false,
+        autoRemove: "interval",
+        autoRemoveInterval: 1
+    })
+}));
+
+app.use('/', authRouter);
+app.use('/', hospitalRouter);
+
+//server listening
+app.listen(port, () => {
+    console.log(`server started on ${port}`);
+});
